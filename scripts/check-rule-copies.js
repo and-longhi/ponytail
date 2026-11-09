@@ -28,6 +28,14 @@ const copies = [
 
 let failed = false;
 
+// Kiro loads skills from .kiro/skills/, so they are verbatim copies of skills/.
+for (const name of fs.readdirSync(path.join(root, 'skills'), { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name)) {
+  if (read(`.kiro/skills/${name}/SKILL.md`) !== read(`skills/${name}/SKILL.md`)) {
+    console.error(`.kiro/skills/${name}/SKILL.md drifted from skills/${name}/SKILL.md`);
+    failed = true;
+  }
+}
+
 for (const [relPath, normalize] of copies) {
   const actual = normalize(read(relPath));
   if (actual !== canonical) {

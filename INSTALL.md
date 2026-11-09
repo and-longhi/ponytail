@@ -209,7 +209,16 @@ Pick the agent with `--agent` (for IBM Bob: `--agent bob`), take all six without
 
 Cursor (rule-only alternative to the [hooks install](#cursor)), Windsurf, Cline, GitHub Copilot Chat (the VS Code, JetBrains, and Visual Studio editor extension, not the standalone [Copilot CLI](#github-copilot-cli)), Aider, Kiro, Zed, CodeWhale, Qoder: copy the matching rules file from this repo ([`.cursor/rules/`](.cursor/rules/), [`.windsurf/rules/`](.windsurf/rules/), [`.clinerules/`](.clinerules/), [`.github/copilot-instructions.md`](.github/copilot-instructions.md), [`AGENTS.md`](AGENTS.md), [`.kiro/steering/`](.kiro/steering/), [`.qoder/rules/`](.qoder/rules/)).
 
-Kiro: copy `.kiro/steering/ponytail.md` to `~/.kiro/steering/` (global) or `.kiro/steering/` in your project.
+Kiro: copy `.kiro/steering/ponytail.md` and the six skills in `.kiro/skills/` to `~/.kiro/` (global) or to `.kiro/` in your project:
+
+```bash
+git clone https://github.com/DietrichGebert/ponytail
+mkdir -p ~/.kiro/steering ~/.kiro/skills
+cp ponytail/.kiro/steering/ponytail.md ~/.kiro/steering/
+cp -r ponytail/.kiro/skills/* ~/.kiro/skills/
+```
+
+The steering file is the always-on ruleset; the skills (`ponytail`, `ponytail-review`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help`) are loaded on demand. No `/ponytail` levels or hooks on Kiro.
 
 GitHub Copilot CLI fallback (instruction-only mode): it reads `AGENTS.md` and `.github/copilot-instructions.md` in a project, or copy the rules into `~/.copilot/copilot-instructions.md` to run ponytail in every project. This path keeps always-on guidance, but does not add plugin mode switches or hooks.
 
